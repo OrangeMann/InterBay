@@ -125,6 +125,7 @@ var/list/flooring_types
 	icon = 'icons/turf/bunk.dmi'
 	icon_base = "plating"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	flags = null
 	build_type = /obj/item/stack/tile/bunker
 
@@ -157,6 +158,7 @@ var/list/flooring_types
 	desc = "Don't slip."
 	icon_base = "old_tile_cargo"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	build_type = /obj/item/stack/tile/yellow
 
 /decl/flooring/tiling/bunker/black
@@ -164,6 +166,7 @@ var/list/flooring_types
 	desc = "Don't slip."
 	icon_base = "old_tile_black"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	build_type = /obj/item/stack/tile/black
 
 /decl/flooring/tiling/bunker/red
@@ -171,6 +174,7 @@ var/list/flooring_types
 	desc = "Don't slip."
 	icon_base = "old_tile_red"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	build_type = /obj/item/stack/tile/red
 
 /decl/flooring/tiling/bunker/polar
@@ -178,6 +182,7 @@ var/list/flooring_types
 	desc = "Don't slip."
 	icon_base = "polar"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	build_type = /obj/item/stack/tile/polar
 
 /decl/flooring/tiling/bar
@@ -186,11 +191,13 @@ var/list/flooring_types
 	icon = 'icons/turf/flooring/tiles.dmi'
 	icon_base = "bar"
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	build_type = /obj/item/stack/tile/bar
 
 /decl/flooring/tiling/misc
 	icon = 'icons/turf/flooring/misc.dmi'
 	has_damage_range = null
+	flags = TURF_REMOVE_CROWBAR
 	can_paint = 0
 
 /decl/flooring/tiling/misc/sec

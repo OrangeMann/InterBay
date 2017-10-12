@@ -126,7 +126,6 @@ var/list/flooring_types
 	icon_base = "plating"
 	has_damage_range = null
 	flags = TURF_REMOVE_CROWBAR
-	flags = null
 	build_type = /obj/item/stack/tile/bunker
 
 /decl/flooring/tiling/bunker/hydro

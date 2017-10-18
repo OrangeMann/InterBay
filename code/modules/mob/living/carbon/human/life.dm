@@ -79,6 +79,7 @@
 
 		handle_medical_side_effects()
 
+
 		if(!client && !mind)
 			species.handle_npc(src)
 
@@ -96,6 +97,7 @@
 
 /mob/living/carbon/human/breathe()
 	if(!in_stasis)
+		handle_gas_mask_sound()
 		..()
 
 // Calculate how vulnerable the human is to under- and overpressure.
@@ -647,6 +649,8 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		handle_decay()
+
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 
@@ -655,6 +659,16 @@
 			blinded = 1
 			silent = 0
 			return 1
+
+		//handle_gas_mask_sound()
+
+		handle_combat_mode()
+
+		handle_smelly_things()
+
+		handle_happiness()
+
+		handle_hygiene()
 
 		if(hallucination)
 			if(hallucination >= 20 && !(species.flags & (NO_POISON|IS_PLANT)) )
@@ -733,7 +747,6 @@
 			gloves.germ_level += 1
 
 		CheckStamina()
-		handle_combat_mode()
 	return 1
 
 /mob/living/carbon/human/handle_regular_hud_updates()
@@ -812,7 +825,7 @@
 							if(40 to 60)			healths.icon_state = "health2"
 							if(20 to 40)			healths.icon_state = "health1"
 							if(0 to 20)				healths.icon_state = "health0"
-													
+
 					else
 						// Generate a by-limb health display.
 						healths.icon_state = "blank"
@@ -846,7 +859,7 @@
 							health_images += image('icons/mob/screen1_health.dmi',"fullhealth")
 
 						healths.overlays += health_images
-					
+
 
 		if(nutrition_icon)
 			switch(nutrition)
@@ -938,7 +951,7 @@
 						bodytemp.icon_state = "temp0"
 	if(resting)
 		rest.icon_state = "rest1"
-	else 
+	else
 		rest.icon_state = "rest0"
 
 	return 1
@@ -1247,3 +1260,75 @@
 	..()
 	if(XRAY in mutations)
 		set_sight(sight|SEE_TURFS|SEE_MOBS|SEE_OBJS)
+
+/mob/living/carbon/human/proc/handle_decay()
+	var/decaytime = world.time - timeofdeath
+	var/image/flies = image('icons/effects/effects.dmi', "rotten")//This is a hack, there has got to be a safer way to do this but I don't know it at the moment.
+
+	if(isSynthetic())
+		return
+
+	if(decaytime <= 6000) //10 minutes for decaylevel1 -- stinky
+		return
+
+	if(decaytime > 6000 && decaytime <= 12000)//20 minutes for decaylevel2 -- bloated and very stinky
+		decaylevel = 1
+		overlays -= flies
+		overlays += flies
+
+	if(decaytime > 12000 && decaytime <= 18000)//30 minutes for decaylevel3 -- rotting and gross
+		decaylevel = 2
+
+	if(decaytime > 18000 && decaytime <= 27000)//45 minutes for decaylevel4 -- skeleton
+		decaylevel = 3
+
+	if(decaytime > 27000)
+		decaylevel = 4
+		overlays -= flies
+		flies = null
+		ChangeToSkeleton()
+		return //No puking over skeletons, they don't smell at all!
+
+
+	for(var/mob/living/carbon/human/H in range(decaylevel, src))
+		if(prob(2))
+			if(istype(loc,/obj/item/bodybag))
+				return
+			if(H.wear_mask)
+				return
+			if(H.stat == DEAD)//This shouldn't even need to be a fucking check.
+				return
+			to_chat(H, "<spawn class='warning'>You smell something foul...")
+			H.add_event("disgust", /datum/happiness_event/disgust/verygross)
+			if(prob(75))
+				H.vomit()
+
+//So that people will stop shitting in the fucking hallways all the time. Actually this will probably encourage them.
+/mob/living/carbon/human/proc/handle_smelly_things()
+	if(wear_mask)
+		return
+
+	if(/obj/effect/decal/cleanable/poo in range(5, src))
+		if(prob(2))
+			to_chat(src, "<spawn class='warning'>Something smells like shit...")
+			add_event("disgust", /datum/happiness_event/disgust/verygross)
+			if(prob(50))
+				vomit()
+
+	for(var/obj/item/weapon/reagent_containers/food/snacks/poo/P in range(5, src))
+		if(istype(P.loc, /obj/machinery/disposal) || istype(P.loc, /obj/item/weapon/storage/bag))
+			return
+
+		if(prob(2))
+			to_chat(src, "<spawn class='warning'>Something smells like shit...")
+			add_event("disgust", /datum/happiness_event/disgust/verygross)
+			if(prob(50))
+				vomit()
+
+
+/mob/living/carbon/human/proc/handle_gas_mask_sound()
+	//var/soundcooldown = world.time
+	if(istype(wear_mask, /obj/item/clothing/mask/gas))
+		//if((world.time - soundcooldown) >= 300)
+		var/mask_sound = pick('sound/effects/gasmask1.ogg','sound/effects/gasmask2.ogg','sound/effects/gasmask3.ogg','sound/effects/gasmask4.ogg','sound/effects/gasmask5.ogg','sound/effects/gasmask6.ogg','sound/effects/gasmask7.ogg','sound/effects/gasmask8.ogg','sound/effects/gasmask9.ogg','sound/effects/gasmask10.ogg')
+		playsound(src, mask_sound, 50, 1)

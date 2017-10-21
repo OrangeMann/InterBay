@@ -248,6 +248,7 @@
 					to_chat(src, "<span class='warning'>You feel strange!</span>")
 					adjustCloneLoss(5 * RADIATION_SPEED_COEFFICIENT)
 					emote("gasp")
+					gasp_sound()
 		if(radiation > 150)
 			damage = 8
 			radiation -= 1 * RADIATION_SPEED_COEFFICIENT
@@ -310,6 +311,7 @@
 		if(prob(15) && !nervous_system_failure())
 			if(!is_asystole())
 				emote("gasp")
+				gasp_sound()
 			else
 				emote(pick("shiver","twitch"))
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS)

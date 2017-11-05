@@ -29,6 +29,15 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = 0
 
+//Magistrate
+/obj/item/clothing/suit/robes
+	name = "magistrate's robes"
+	desc = "Fit for a king... or a uh... magistrate."
+	icon_state = "robes"
+	item_state = "robes"
+	body_parts_covered = UPPER_TORSO|ARMS
+
+
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"
@@ -214,3 +223,10 @@
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe, \
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency,/obj/item/weapon/scalpel,/obj/item/weapon/retractor,/obj/item/weapon/hemostat, \
 	/obj/item/weapon/cautery,/obj/item/weapon/bonegel,/obj/item/weapon/FixOVein)
+
+/obj/item/clothing/suit/storage/doctor_vest
+	name = "doctor\'s vest"
+	desc = "A vest worn by doctors. Comes with pockets for bandages and the like."
+	icon_state = "doctor_vest"
+	item_state = "doctor_vest"
+	blood_overlay_type = "armor"

@@ -39,6 +39,7 @@
 	icon_state = "arbiter"
 	item_state = "arbiter"
 	flags_inv = HIDEFACE|HIDEEARS|BLOCKHEADHAIR//Hides their identity.
+	body_parts_covered = HEAD|FACE|EYES//Blocks their face and shit.
 
 /obj/item/clothing/head/helmet/arbiter/suprme
 	name = "suprme arbiter helmet"
@@ -64,6 +65,8 @@
 	icon_state = "arbiter"
 	item_state = "arbiter"
 
+
+//REAGENTS
 //The revelator toxin
 /datum/reagent/toxin/revelator
 	name = "revelator"
@@ -78,23 +81,37 @@
 		..()
 		reagents.add_reagent("revelator",15)
 
+/datum/reagent/toxin/unrevelator
+	name = "unrevelator"
+	id = "unrevelator"
+	description = "For tricking church members."
+	strength = 25//Yep, it's poisonous. To discourage taking it all the time.
 
+/obj/item/weapon/reagent_containers/syringe/unrevelator
+	name = "weird old syringe"
+	desc = "You're not sure what it has."
+	New()
+		..()
+		reagents.add_reagent("unrevelator",15)
+
+//TOOLS
 //The scanner
-/obj/item/abriter_scanner
+/obj/item/arbiter_scanner
 	icon = 'icons/obj/device.dmi'
 	icon_state = "arbiterscanner"
 	name = "heretic scanner"
 	desc = "Inject someone with revelator and then scan them for results."
+	w_class = ITEM_SIZE_SMALL
 	force = 0
 	var/stored_info = 0
 
-/obj/item/abriter_scanner/attack(mob/living/L, mob/user)
+/obj/item/arbiter_scanner/attack(mob/living/L, mob/user)
 
 	if(!L.reagents.has_reagent("revelator"))
 		user.visible_message("<span class='notice'>The [src] beeps: \"ERROR: Subject needs revelator.\"</span>")
 
 	else if(do_after(user,30))
-		if(L.religion != LEGAL_RELIGION)
+		if(L.religion != LEGAL_RELIGION && !L.reagents.has_reagent("unrevelator"))//Unrevelator can trick the result.
 			stored_info = 2
 		else
 			stored_info = 1
@@ -111,19 +128,32 @@
 	anchored = 1
 
 /obj/machinery/arbiter_computer/attackby(var/obj/item/I, var/mob/user)
-	if(!istype(I,/obj/item/abriter_scanner))
+	if(!istype(I,/obj/item/arbiter_scanner))
 		return
 
-	var/obj/item/abriter_scanner/scanner = I
+	var/obj/item/arbiter_scanner/scanner = I
 	if(!scanner.stored_info)
 		visible_message("<span class='notice'>The [src] beeps: \"No data detected.\"</span>")
 		return
 	if(scanner.stored_info == 2)
-		visible_message("<span class='notice'>The [src] beeps: \"Subject is heretic.\"</span>")
+		visible_message("<span class='notice'>The [src] beeps: \"Subject <b>IS</b> a heretic.\"</span>")
 		return
 	else
 		visible_message("<span class='notice'>The [src] beeps: \"Subject is <b>NOT</b> a heretic.\"</span>")
 
 /obj/machinery/arbiter_computer/attack_hand(mob/user as mob)
 	..()
-	visible_message("<span class='notice'The [src] beeps: \"Scan subject with arbiter scanner, and then use the scanner on this machine for results.\"</span>")
+	visible_message("<span class='notice'>The [src] beeps: \"Scan subject with arbiter scanner, and then use the scanner on this machine for results.\"</span>")
+
+
+
+
+//PRAYER
+var/accepted_prayer //The prayer that all those who are not heretics will have.
+
+proc/generate_random_prayer()//This generates a new one.
+	var/prayer = pick("Oh great AI. ", "Oh our Lord Verina. ", "Verina, our Lord and Saviour. ")
+	prayer += pick("You bathe us in your glow. ", "You bathe our minds in you omniscient wisdom. ", "You bathe our [pick("outpost","kingdom","cities")] in your wealth. ")
+	prayer += pick("Verina be praised. ", "Verina save us all. ", "Verina guide us all. ")
+	prayer += "Amen."
+	return prayer

@@ -548,13 +548,21 @@ var/global/datum/controller/occupations/job_master
 		if(H.religion)//In case they somehow don't have one.
 			if(H.religion_is_legal())
 				to_chat(H, "You are a worshipper of <b><font color='red'>[H.religion]</font></b>. It's the only legal religion in this land, do not be swayed by the heretics of the <b>[ILLEGAL_RELIGION]</b>.")
+				if(prob(95))//Only a 5% chance to not remember the prayer.
+					H.mind.prayer = accepted_prayer
+					to_chat(H, "<span class='notice'>The prayer today is: <b>[H.mind.prayer]</b> Remember this prayer.</span>")
+				else
+					to_chat(H, "<span class='danger'>Try as you might... you just can't seem to remember the prayer today. This won't look good to the Arbiters.")
 			else
 				to_chat(H, "You are a worshipper of the <b><font color='red'>[H.religion]</font>. It is not a legal religion of this land. Do not be caught by the <b>Inquisition</b>.")
+				if(prob(5))
+					H.mind.prayer = accepted_prayer
+					to_chat(H, "<span class='notice'>You can't believe your luck, you've managed to pick up on the selected prayer for today. It's: <b>[H.mind.prayer]</b> Remember this prayer, and Gods save you from the Arbiters.\n</span>")
 				var/brothers_message = "Your fellow resisters are here too, they are:\n"
 				for(var/mob/living/carbon/human/M in player_list)
 					if(!M.religion_is_legal() && M != H)
 						brothers_message += "[M.name]\n"
-				brothers_message += "Protect them like family. Do not give their name\'s away to the Inquisition."
+				brothers_message += "Protect them like family. Do not give their names\' away to the Inquisition."
 
 
 

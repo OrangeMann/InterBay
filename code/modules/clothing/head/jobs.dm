@@ -161,3 +161,8 @@
 	desc = "A white beret adorned with the crest of NanoTrasen. For security guards that are more inclined towards style than safety."
 	icon_state = "beret_corporate_whitered"
 
+/obj/item/clothing/head/mco
+	name = "quartermaster\'s hat"
+	desc = "For money grubbing quartermasters."
+	icon_state = "mco"
+	item_state = "mco"

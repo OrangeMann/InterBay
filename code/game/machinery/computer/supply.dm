@@ -296,6 +296,13 @@
 				playsound(usr.loc,'sound/machines/dotprinter.ogg', 40, 1)
 				return 1
 				. = TRUE
+		if("cashin")
+			var/cashdesired = input("How how many supply points would you like to convert to cash?","Cashing in", 1) as null|num
+			if(cashdesired)
+				var/cash_to_remove = round(min(cashdesired,supply_controller.points))
+				supply_controller.points -= cash_to_remove
+				spawn_money(cash_to_remove,src.loc,usr)
+			. = TRUE
 		if("login") //sign in as merchant
 			if(!src.allowed(usr))
 				return TRUE
@@ -357,3 +364,22 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
+
+/obj/machinery/computer/supply/bullshitsnowflakecashin
+	name = "Cargo Cashin Machine"
+	desc = "It's a machine for converting cargo points to cash. You can see small text engraved at the bottom that reads \"<small>Fuck you TGUI and all your stupid bullshit I hate***</small>\" The rest is too small to read."
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "atm"
+	density = 0
+
+/obj/machinery/computer/supply/bullshitsnowflakecashin/attack_hand(var/mob/user as mob)
+	if(allowed(user))
+		var/cashout = input("How much cash would you like?","[supply_controller.points] points left") as null|num
+		if(cashout)
+			if(supply_controller.points < cashout)
+				to_chat(user, "<span class='warning'> Not enough points.</span>")
+				return
+			supply_controller.points -= cashout
+			spawn_money(cashout,src.loc,user)
+
+

@@ -9,7 +9,7 @@
 						/datum/job/qm,
 						/datum/job/engineer,
 						/datum/job/cargo_tech,
-						/datum/job/mining,
+						///datum/job/mining,
 						/datum/job/ouvrier,
 						/datum/job/chef,
 						/datum/job/chaplain,
@@ -31,6 +31,7 @@
 	economic_modifier = 1
 	ideal_character_age = 21
 	alt_titles = null
+	social_class = SOCIAL_CLASS_MIN
 
 	equip(var/mob/living/carbon/human/H)
 		..()
@@ -39,11 +40,12 @@
 
 /datum/job/captain
 	title = "Magistrate"
-	supervisors = "CMA and you're good will."
+	supervisors = "CMA and your good will."
 	minimal_player_age = 41
 	economic_modifier = 10
 	ideal_character_age = 65
 	outfit_type = /decl/hierarchy/outfit/job/dreyfus/magistrate
+	social_class = SOCIAL_CLASS_MAX
 
 	equip(var/mob/living/carbon/human/H)
 		..()
@@ -60,6 +62,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	outfit_type = /decl/hierarchy/outfit/job/dreyfus/adjoint
+	social_class = SOCIAL_CLASS_HIGH
 
 	equip(var/mob/living/carbon/human/H)
 		..()
@@ -91,6 +94,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	outfit_type = /decl/hierarchy/outfit/job/science/superviseur
+	social_class = SOCIAL_CLASS_HIGH
 	access = list(access_medical, access_medical_equip, access_morgue, access_genetics, access_heads, access_tox,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_maint_tunnels, access_external_airlocks,
@@ -163,6 +167,7 @@
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_external_airlocks)
 	minimal_player_age = 7
 	outfit_type = /decl/hierarchy/outfit/job/security/head_peacekeeper
+	social_class = SOCIAL_CLASS_HIGH
 
 	equip(var/mob/living/carbon/human/H)
 		..()
@@ -266,10 +271,8 @@
 	department = "Supply"
 	access = list(access_maint_tunnels, access_mailsorting, access_manufacturing, access_cargo, access_cargo_bot, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_manufacturing, access_cargo, access_cargo_bot, access_mining, access_mining_station)
-	account_allowed = 0			  //This breaks things.
-	create_record = 1             //No one gives a fuck about kids lol.
-	has_email = 0				  //Nor do kids get email accounts.
 	outfit_type = /decl/hierarchy/outfit/job/cargo_kid
+	social_class = SOCIAL_CLASS_MIN
 
 	equip(var/mob/living/carbon/human/H)
 		H.set_species("Child")//Actually makes them a child. Called before ..() so they can get their clothes.
@@ -310,7 +313,7 @@
 	ideal_character_age = 21
 	total_positions = 1
 	spawn_positions = 1
-	minimal_access = list(access_bar, access_kitchen)
+	minimal_access = list(access_bar, access_kitchen, access_hydroponics)
 
 	equip(var/mob/living/carbon/human/H)
 		..()
@@ -371,11 +374,11 @@
 /datum/job/supreme_arbiter
 	title = "Supreme Arbiter"
 	department = "Civilian"
-	supervisors = "our glorious god Verina"
+	supervisors = "our glorious God, Verina"
 	faction = "Station"
 	department_flag = CIV
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 1
+	spawn_positions = 1
 	economic_modifier = 5
 	selection_color = "#6161aa"
 	access = list(access_maint_tunnels, access_chapel_office)
@@ -386,8 +389,8 @@
 		..()
 		if(!H.religion_is_legal())//So that they can't be heretics.
 			H.religion = LEGAL_RELIGION
-		H.add_stats(rand(11,16), rand(10,14), rand(7,10))
-		H.add_skills(rand(60, 75), rand(60,75))
+		H.add_stats(rand(9,14), rand(8,12), rand(12,16))
+		H.add_skills(rand(60, 75), rand(60,75), rand(50,75))
 
 
 
@@ -406,6 +409,7 @@
 	no_late_join = 1
 	selection_color = "#6161aa"
 	outfit_type = /decl/hierarchy/outfit/shipraiders
+	social_class = SOCIAL_CLASS_MIN
 
 	equip(var/mob/living/carbon/human/H)
 		..()

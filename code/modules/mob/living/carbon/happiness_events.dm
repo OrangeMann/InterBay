@@ -106,9 +106,23 @@
 	timeout = 1800
 
 /datum/happiness_event/antsy//Withdrawl.
-	description = "<span class='info'>I could use a smoke.</span>\n"
+	description = "<span class='danger'>I could use a smoke.</span>\n"
 	happiness = -3
 	timeout = 1800
+
+/datum/happiness_event/hot_food //Hot food feels good!
+	description = "<span class='info'>I've eaten something warm.</span>\n"
+	happiness = 3
+	timeout = 1800
+
+/datum/happiness_event/cold_drink //Cold drinks feel good!
+	description = "<span class='info'>I've had something refreshing.</span>\n"
+	happiness = 3
+	timeout = 1800
+
+/datum/happiness_event/high
+	description = "<span class='binfo'>I'm high as fuck</span>\n"
+	happiness = 12
 
 
 
@@ -129,25 +143,37 @@
 	timeout = 1800
 
 //Good sex here too because why not.
-/datum/happiness_event/goodsex
-	description = "<span class='info'><b>That sex was really good!</b>\n"
-	happiness = 4
+/datum/happiness_event/came
+	description = "<span class='binfo'>I came!\n"
+	happiness = 10
+	timeout = 1800
+
+//For when you get branded.
+/datum/happiness_event/humiliated
+	description = "<span class='danger'>I've been humiliated, and I am embarassed.</span>\n"
+	happiness = -10
+	timeout = 1800
+
+//And when you've seen someone branded
+/datum/happiness_event/punished_heretic
+	description = "<span class='binfo'>I've seen a punished heretic.</span>\n"
+	happiness = 10
 	timeout = 1800
 
 
 //Unused so far but I want to remember them to use them later.
 /datum/happiness_event/disturbing
-	description = "I recently saw something disturbing</span>\n"
+	description = "<span class='danger'>I recently saw something disturbing</span>\n"
 	happiness = -2
 
 /datum/happiness_event/clown
-	description = "I recently saw a funny clown!</span>\n"
+	description = "<span class='info'>I recently saw a funny clown!</span>\n"
 	happiness = 1
 
 /datum/happiness_event/cloned_corpse
-	description = "I recently saw my own corpse...</span>\n"
+	description = "<span class='danger'>I recently saw my own corpse...</span>\n"
 	happiness = -6
 
 /datum/happiness_event/surgery
-	description = "HE'S CUTTING ME OPEN!!</span>\n"
+	description = "<span class='danger'>HE'S CUTTING ME OPEN!!</span>\n"
 	happiness = -8

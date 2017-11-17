@@ -70,8 +70,9 @@
 	playsound(user.loc, 'sound/items/drink.ogg', rand(10, 50), 1)
 
 /obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
-	if(!..(user, 1))
-		return
+	//if(!..(user)//(user, 1))
+	//	return
+	..()
 	if(!reagents || reagents.total_volume == 0)
 		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 	else if (reagents.total_volume <= volume * 0.25)
@@ -205,7 +206,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
 	gender = PLURAL
-	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 20U of boiling water! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	center_of_mass = "x=16;y=11"
 	New()

@@ -128,14 +128,12 @@
 		reactant_used += amt_used
 		holder.remove_reagent(reactant, amt_used, safety = 1)
 
-	var/amt_produced = 0
+	var/amt_produced = result_amount * reaction_progress //NOTE: Reactions use this value even with a null produce.
+
 	var/energy_moved = holder.temperature * reactant_used
 	var/stolen_energy = energy_moved * thermal_reaction_factor
 
-	//add the product
 	if(result)
-		amt_produced = result_amount * reaction_progress
-
 		//the energy that was in the reactants is now in the produce.
 		holder.add_reagent(result, amt_produced, data, safety=1, heat=(energy_moved+stolen_energy)/amt_produced)
 	else
@@ -151,7 +149,7 @@
 			air.add_thermal_energy(energy_moved-stolen_energy)
 			//warning("Evaporated base:[energy_moved]J Total evaporated:[energy_moved-stolen_energy]J")
 
-	on_reaction(holder, amt_produced, reactant_used)
+	on_reaction(holder, amt_produced)
 
 	return reaction_progress
 
@@ -594,7 +592,7 @@
 	result_amount = 3
 
 /datum/chemical_reaction/revelator
-	name = "revelator"
+	name = "Revelator"
 	id = "revelator"
 	result = "revelator"
 	required_reagents = list("mindbreaker" = 1, "phoron" = 1, "dognium" = 3)
@@ -602,7 +600,7 @@
 	log_is_important = 1
 
 /datum/chemical_reaction/unrevelator
-	name = "unrevelator"
+	name = "Unrevelator"
 	id = "unrevelator"
 	result = "unrevelator"
 	required_reagents = list("mindbreaker" = 1, "hclacid" = 1, "dognium" = 3)
@@ -615,10 +613,8 @@
 	name = "Solid Phoron"
 	id = "solidphoron"
 	result = null
-	required_reagents = list("iron" = 5, "phoron" = 20)
-
+	required_reagents = list("phoron" = 20)
 	temperature_max = T0C
-
 	result_amount = 1
 
 /datum/chemical_reaction/phoronsolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -713,7 +709,6 @@
 	result_amount = 2
 	log_is_important = 1
 	reaction_rate = HALF_LIFE(0)
-	temperature_min = T0C+5
 
 /datum/chemical_reaction/nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/datum/effect/effect/system/reagents_explosion/e = new()
@@ -1104,6 +1099,7 @@
 	for(var/i = 1, i <= 3, i++)
 		var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 		M.loc = get_turf(holder.my_atom)
+		M.reagents.temperature = holder.temperature
 	..()
 
 //Green
@@ -1460,7 +1456,8 @@
 	required = /obj/item/slime_extract/pyrite
 
 /datum/chemical_reaction/slime/paint/on_reaction(var/datum/reagents/holder)
-	new /obj/item/weapon/reagent_containers/glass/paint/random(get_turf(holder.my_atom))
+	var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/glass/paint/random(get_turf(holder.my_atom))
+	O.reagents.temperature = holder.temperature
 	..()
 
 //cerulean
@@ -1507,7 +1504,8 @@
 /datum/chemical_reaction/tofu/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/chocolate_bar
@@ -1520,7 +1518,8 @@
 /datum/chemical_reaction/chocolate_bar/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/chocolate_bar2
@@ -1533,7 +1532,8 @@
 /datum/chemical_reaction/chocolate_bar2/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/hot_coco
@@ -1575,7 +1575,8 @@
 /datum/chemical_reaction/cheesewheel/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/meatball
@@ -1588,7 +1589,8 @@
 /datum/chemical_reaction/meatball/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatball(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/meatball(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/dough
@@ -1601,7 +1603,8 @@
 /datum/chemical_reaction/dough/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/dough(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/syntiflesh
@@ -1614,7 +1617,8 @@
 /datum/chemical_reaction/syntiflesh/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+		var/obj/item/weapon/reagent_containers/O = new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+		O.reagents.temperature = holder.temperature
 	return
 
 /datum/chemical_reaction/hot_ramen
@@ -1622,14 +1626,17 @@
 	id = "hot_ramen"
 	result = "hot_ramen"
 	required_reagents = list("water" = 1, "dry_ramen" = 3)
-	result_amount = 3
+	result_amount = 4
+	temperature_min = T0C + 50
+	//thermal_reaction_factor = -0.1
 
 /datum/chemical_reaction/hell_ramen
 	name = "Hell Ramen"
 	id = "hell_ramen"
 	result = "hell_ramen"
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
-	result_amount = 6
+	result_amount = 7
+	//thermal_reaction_factor = -0.1
 
 /* Alcohol */
 
@@ -1638,14 +1645,14 @@
 	id = "goldschlager"
 	result = "goldschlager"
 	required_reagents = list("vodka" = 10, "gold" = 1)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/patron
 	name = "Patron"
 	id = "patron"
 	result = "patron"
 	required_reagents = list("tequilla" = 10, "silver" = 1)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/bilk
 	name = "Bilk"
@@ -1659,7 +1666,7 @@
 	id = "nuka_cola"
 	result = "nuka_cola"
 	required_reagents = list("uranium" = 1, "cola" = 5)
-	result_amount = 5
+	result_amount = 6
 
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
@@ -1739,7 +1746,7 @@
 	result = "kahlua"
 	required_reagents = list("coffee" = 5, "sugar" = 5)
 	catalysts = list("enzyme" = 5)
-	result_amount = 5
+	result_amount = 10
 
 /datum/chemical_reaction/gin_tonic
 	name = "Gin and Tonic"
@@ -1830,7 +1837,7 @@
 	id = "beepksysmash"
 	result = "beepskysmash"
 	required_reagents = list("limejuice" = 1, "whiskey" = 1, "iron" = 1)
-	result_amount = 2
+	result_amount = 3
 
 /datum/chemical_reaction/doctor_delight
 	name = "The Doctor's Delight"
@@ -1858,7 +1865,7 @@
 	id = "hooch"
 	result = "hooch"
 	required_reagents = list ("sugar" = 1, "ethanol" = 2, "fuel" = 1)
-	result_amount = 3
+	result_amount = 4
 
 /datum/chemical_reaction/irish_coffee
 	name = "Irish Coffee"
@@ -1914,7 +1921,7 @@
 	id = "manhattan_proj"
 	result = "manhattan_proj"
 	required_reagents = list("manhattan" = 10, "uranium" = 1)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/vodka_tonic
 	name = "Vodka and Tonic"
@@ -1942,7 +1949,7 @@
 	id = "singulo"
 	result = "singulo"
 	required_reagents = list("vodka" = 5, "radium" = 1, "wine" = 5)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/alliescocktail
 	name = "Allies Cocktail"
@@ -1991,7 +1998,7 @@
 	id = "sbiten"
 	result = "sbiten"
 	required_reagents = list("mead" = 10, "capsaicin" = 1)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/red_mead
 	name = "Red Mead"
@@ -2041,7 +2048,7 @@
 	id = "amasec"
 	result = "amasec"
 	required_reagents = list("iron" = 1, "wine" = 5, "vodka" = 5)
-	result_amount = 10
+	result_amount = 11
 
 /datum/chemical_reaction/changelingsting
 	name = "Changeling Sting"
@@ -2272,6 +2279,7 @@
 	id = "water_evaporation"
 	result = null
 	required_reagents = list("water" = 1)
+	result_amount = 1
 	temperature_min = T0C + 100
 	reaction_rate = REACTION_RATE(0.1)
 	mix_message = ""
@@ -2284,6 +2292,7 @@
 	name = "Phoron"
 	id = "phoron_evaporation"
 	result = null
+	result_amount = 1
 	required_reagents = list("phoron" = 1)
 	temperature_min = PHORON_MINIMUM_BURN_TEMPERATURE
 	temperature_max = PHORON_FLASHPOINT
@@ -2292,9 +2301,9 @@
 	reaction_sound = 'sound/effects/bubbles2.ogg'
 	thermal_reaction_factor = -0.5	//Phoron robs the mixture of a lot of heat as it evaporates.
 
-/datum/chemical_reaction/phoron_evaporation/on_reaction(var/datum/reagents/holder, var/created_volume, var/removed_volume)
+/datum/chemical_reaction/phoron_evaporation/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	if(istype(T))
 		var/datum/gas_mixture/air = T.return_air()
-		air.adjust_gas_temp("phoron", removed_volume * LIQUIDFUEL_AMOUNT_TO_MOL, holder.temperature, update = 1)
+		air.adjust_gas_temp("phoron", created_volume * LIQUIDFUEL_AMOUNT_TO_MOL, holder.temperature, update = 1)
 	return

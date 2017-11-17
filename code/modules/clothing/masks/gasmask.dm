@@ -3,8 +3,8 @@
 	desc = "A face-covering mask that can be connected to an air supply. Filters harmful gases from the air."
 	icon_state = "fullgas"
 	item_flags = BLOCK_GAS_SMOKE_EFFECT | AIRTIGHT
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHEADHAIR
-	body_parts_covered = FACE|EYES
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
+	body_parts_covered = HEAD|FACE|EYES
 	w_class = ITEM_SIZE_NORMAL
 	item_state = "gas_mask"
 	gas_transfer_coefficient = 0.01

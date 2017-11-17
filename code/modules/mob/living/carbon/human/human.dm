@@ -660,7 +660,7 @@
 		if(!T.Adjacent(src))
 			return 0
 		var/rname = href_list["craft"]
-		var/datum/crafting_recipie/R = crafting_recipies[rname]
+		var/datum/crafting_recipe/R = crafting_recipes[rname]
 		R.make(src, T)
 
 	///////Interactions!!///////
@@ -1905,3 +1905,24 @@
 		potenzia = -1
 		mutilated_genitals = 1
 		return 1
+/mob/living/carbon/proc/get_social_class()
+	var/socclass = social_class
+	switch(socclass)
+		if(SOCIAL_CLASS_MIN)
+			return "<b>filth</b>."
+		if(SOCIAL_CLASS_MED)
+			return "<b>working class</b>."
+		if(SOCIAL_CLASS_HIGH)
+			return "<b>a lesser noble</b>"
+		if(SOCIAL_CLASS_MAX)
+			return "<b>a noble</b>."
+
+
+/mob/living/carbon/human/proc/get_social_description(var/mob/living/carbon/human/H)
+	var/socclass = social_class
+	if(socclass < H.social_class)
+		return "They are of a <b>lesser</b> social class than me."
+	else if(socclass > H.social_class)
+		return "They are of a <b>higher</b> social class than me."
+	else
+		return "They are of the same social class as me."

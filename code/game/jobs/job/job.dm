@@ -24,7 +24,6 @@
 	var/explanation_text = null			  // A brief one line description of what the hell you're supposed to be doing.
 	var/account_allowed = 1				  // Does this job type come with a station account?
 	var/economic_modifier = 2			  // With how much does this job modify the initial account amount?
-	var/starting_cash = 50
 
 	var/outfit_type                       // The outfit the employee will be dressed in, if any
 
@@ -34,8 +33,10 @@
 	var/announced						  //If their arrival is announced on radio
 
 	var/no_late_join = 0				  //Can this job join after the round has started?
+	var/social_class = SOCIAL_CLASS_MED	  //Job's social standing.
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H, var/alt_title, var/datum/mil_branch/branch)
+	H.social_class = social_class
 	var/decl/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch)
 	if(!outfit)
 		return FALSE

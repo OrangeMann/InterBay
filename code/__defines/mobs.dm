@@ -85,7 +85,7 @@
 #define APPEARANCE_ALL       0xFFFF
 
 // Click cooldown
-#define DEFAULT_SLOW_COOLDOWN	16 //The default cooldown for slow actions.	
+#define DEFAULT_SLOW_COOLDOWN	16 //The default cooldown for slow actions.
 #define DEFAULT_ATTACK_COOLDOWN 8 //Default timeout for aggressive actions
 #define DEFAULT_QUICK_COOLDOWN  4
 
@@ -246,6 +246,11 @@
 #define SPECIES_SKRELL "Skrell"
 #define SPECIES_NABBER "Nabber"
 
+#define SOCIAL_CLASS_MIN 1
+#define SOCIAL_CLASS_MED 2
+#define SOCIAL_CLASS_HIGH 3
+#define SOCIAL_CLASS_MAX 4
+
 #define SURGERY_CLOSED 0
 #define SURGERY_OPEN 1
 #define SURGERY_RETRACTED 2
@@ -304,3 +309,9 @@
 #define STARVATION_BRAIN_DAMAGE 2.5
 
 #define STARVATION_OXY_HEAL_RATE 1 //While starving, THIS much oxygen damage is restored per life tick (instead of the default 5)
+
+//Temperature stuff
+//BODYTEMP_COLD_DAMAGE_LIMIT 			 -13°C Below which freezing damage occurs.						(defined in items_clothing.dm)
+#define TEMPERATURE_REFRESHING 	278.15	//5°C  Below which drinks and foods are considered refreshing.
+#define TEMPERATURE_WARM 		323.15	//50°C Above which drinks and foods are considered warm.
+//BODYTEMP_HEAT_DAMAGE_LIMIT 			  87°C Above which burn damage occurs.							(defined in items_clothing.dm)

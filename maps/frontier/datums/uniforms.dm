@@ -92,6 +92,24 @@
 	shoes = /obj/item/clothing/shoes/child_shoes
 	id = /obj/item/weapon/card/id/dreyfus/cargo
 
+/decl/hierarchy/outfit/job/cadet
+	name = OUTFIT_JOB_NAME("Cadet")
+	uniform = /obj/item/clothing/under/child_jumpsuit
+	shoes = /obj/item/clothing/shoes/child_shoes
+	id = /obj/item/weapon/card/id/dreyfus/sec
+
+/decl/hierarchy/outfit/job/medassist
+	name = OUTFIT_JOB_NAME("Medical Assistant")
+	uniform = /obj/item/clothing/under/child_jumpsuit
+	shoes = /obj/item/clothing/shoes/child_shoes
+	id = /obj/item/weapon/card/id/medical
+
+/decl/hierarchy/outfit/job/jr_upkeep
+	name = OUTFIT_JOB_NAME("Junior Upkeeper")
+	uniform = /obj/item/clothing/under/child_jumpsuit
+	shoes = /obj/item/clothing/shoes/child_shoes
+	id = /obj/item/weapon/card/id/dreyfus/engineer
+
 //church outfits
 /decl/hierarchy/outfit/job/arbiter
 	name = OUTFIT_JOB_NAME("Arbiter")
@@ -110,7 +128,7 @@
 
 /decl/hierarchy/outfit/job/supreme_arbiter
 	name = OUTFIT_JOB_NAME("Supreme Arbiter")
-	head = /obj/item/clothing/head/helmet/arbiter/suprme
+	head = /obj/item/clothing/head/helmet/arbiter/supreme
 	uniform = /obj/item/clothing/under/rank/arbiter
 	shoes = /obj/item/clothing/shoes/jackboots/arbiter
 	l_ear = /obj/item/device/radio/headset/inquision

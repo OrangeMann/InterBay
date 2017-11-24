@@ -7,7 +7,6 @@
 	max_age = 14
 	icobase = 'icons/mob/human_races/child/r_child.dmi'
 	deform = 'icons/mob/human_races/child/r_def_child.dmi'
-	//damage_overlays = 'icons/mob/human_races/masks/dam_monkey.dmi'
 	damage_mask = 'icons/mob/human_races/masks/dam_mask_child.dmi'
 	blood_mask = 'icons/mob/human_races/masks/blood_child.dmi'
 	spawn_flags = SPECIES_IS_RESTRICTED//No more kids becoming nuke ops.
@@ -20,6 +19,8 @@
 	if(H.f_style)//Children don't get beards.
 		H.f_style = "Shaved"
 	to_chat(H, "<span class='info'><big>You're [H.age] years old! Act like it!</big></span>")
+	spawn (2)
+		H.potenzia = max(1, H.potenzia - 5)
 	return ..()
 
 /decl/hierarchy/outfit/job/cadet

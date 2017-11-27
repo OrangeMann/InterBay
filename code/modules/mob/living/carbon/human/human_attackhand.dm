@@ -133,7 +133,7 @@
 				attack_generic(H,rand(1,3),"punched")
 				return
 			H.adjustStaminaLoss(rand(2,3))//Whether or not it connects, we still threw the punch so it takes up stamina.
-			var/rand_damage = rand(1, 5)
+			var/rand_damage = rand(1, 3)
 			var/block = 0
 			var/accurate = 0
 			var/hit_zone = H.zone_sel.selecting
@@ -150,7 +150,7 @@
 				if(I_HELP)
 					if(!src.combat_mode)
 						// We didn't see this coming, so we get the full blow
-						rand_damage = 5
+						rand_damage = 3
 						accurate = 1
 				if(I_HURT, I_GRAB)
 					// We're in a fighting stance, there's a chance we block
@@ -163,7 +163,7 @@
 
 			if(src.grabbed_by.len || src.buckled || !src.canmove || src==H)
 				accurate = 1 // certain circumstances make it impossible for us to evade punches
-				rand_damage = 5
+				rand_damage = 3
 
 			// Process evasion and blocking
 			var/miss_type = 0
@@ -195,7 +195,8 @@
 				*/
 				if(prob(80))
 					hit_zone = ran_zone(hit_zone)
-				if(prob(15) && hit_zone != BP_CHEST) // Missed!
+				var/misschance = H.lying ? 30 : 15
+				if(prob(misschance) && hit_zone != BP_CHEST) // Missed!
 					if(!src.lying)
 						if(H.skillcheck(H.melee_skill, 60, 0) == CRIT_FAILURE)
 							H.resolve_critical_miss()
@@ -247,6 +248,10 @@
 			var/armour = run_armor_check(hit_zone, "melee")
 			// Apply additional unarmed effects.
 			attack.apply_effects(H, src, armour, rand_damage, hit_zone)
+
+			// Nerf attacks done while lying by 1/3rd
+			if (H.lying)
+				real_damage = max(real_damage * 0.66, 1)
 
 			// Finally, apply damage to target
 			apply_damage(real_damage, (attack.deal_halloss ? PAIN : BRUTE), hit_zone, armour, damage_flags=attack.damage_flags())

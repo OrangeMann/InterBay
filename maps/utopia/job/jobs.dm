@@ -9,13 +9,15 @@
 						/datum/job/qm,
 						/datum/job/engineer,
 						/datum/job/cargo_tech,
+						/datum/job/cargo_tech/machinist,
 						///datum/job/mining,
 						/datum/job/ouvrier,
 						/datum/job/chef,
-						/datum/job/chaplain,
+						///datum/job/chaplain,
 						/datum/job/janitor,
 						/datum/job/arbiter,
-						/datum/job/supreme_arbiter
+						/datum/job/supreme_arbiter,
+						/datum/job/doctor/undertaker
 						///datum/job/rd,
 						///datum/job/scientist,
 						///datum/job/medassist,
@@ -31,6 +33,8 @@
 	economic_modifier = 1
 	ideal_character_age = 21
 	alt_titles = null
+	total_positions = 0
+	spawn_positions = 0
 	social_class = SOCIAL_CLASS_MIN
 
 	equip(var/mob/living/carbon/human/H)
@@ -131,7 +135,7 @@
 
 /datum/job/doctor
 	selection_color = "#633d63"
-	title = "Doctor"
+	title = "Practitioner"
 	supervisors = "the Overseer"
 	minimal_player_age = 19
 	economic_modifier = 2
@@ -146,6 +150,12 @@
 		..()
 		H.add_stats(rand(5,7), rand(5,8), rand(10,14))
 		H.add_skills(rand(30,50), rand(30,50), rand(65,75))
+
+
+/datum/job/doctor/undertaker
+	title = "Undertaker"
+	total_positions = 1
+	spawn_positions = 1
 
 
 /datum/job/hos
@@ -256,6 +266,15 @@
 	equip(var/mob/living/carbon/human/H)
 		..()
 		H.add_stats(rand(9,12), rand(9,12), rand(6,9))
+
+/datum/job/cargo_tech/machinist
+	title = "Machinist"
+	total_positions = 1
+	spawn_positions = 1
+	equip(var/mob/living/carbon/human/H)
+		..()
+		H.add_stats(rand(10,15), rand(7,10), rand(9,14))
+
 //kid roles
 /datum/job/ouvrier
 	selection_color = "#7c6a2e"
@@ -384,6 +403,7 @@
 	access = list(access_maint_tunnels, access_chapel_office)
 	minimal_access = list(access_maint_tunnels, access_chapel_office)
 	outfit_type = /decl/hierarchy/outfit/job/supreme_arbiter
+	social_class = SOCIAL_CLASS_HIGH
 
 	equip(var/mob/living/carbon/human/H)//Still weaker than the Head Peacekeeper.
 		..()

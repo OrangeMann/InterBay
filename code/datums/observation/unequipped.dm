@@ -36,3 +36,5 @@ var/decl/observ/item_unequipped/item_unequipped_event = new()
 	..()
 	mob_unequipped_event.raise_event(user, src)
 	item_unequipped_event.raise_event(src, user)
+	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	unwield(user)

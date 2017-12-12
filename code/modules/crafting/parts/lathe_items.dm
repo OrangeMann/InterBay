@@ -4,7 +4,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a reciever."
 	icon_state = "reciever"
-	matter = list(DEFAULT_WALL_MATERIAL = 25)
+	matter = list(DEFAULT_WALL_MATERIAL = 500)
 
 /obj/item/action
 	name = "Action"
@@ -12,7 +12,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a action."
 	icon_state = "action"
-	matter = list(DEFAULT_WALL_MATERIAL = 20)
+	matter = list(DEFAULT_WALL_MATERIAL = 400)
 
 /obj/item/metal_bar
 	name = "Metal Bar"
@@ -20,7 +20,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a metal bar.  Can be made into lots of stuff"
 	icon_state = "metal_bar"
-	matter = list(DEFAULT_WALL_MATERIAL = 15)
+	matter = list(DEFAULT_WALL_MATERIAL = 300)
 
 	mill()
 		return /obj/item/pipe
@@ -34,7 +34,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a glass bar.  Can be made into lots of stuff"
 	icon_state = "glass_bar"
-	matter = list("glass" = 15)
+	matter = list("glass" = 300)
 
 	mill()
 		return /obj/item/glass_tube
@@ -45,7 +45,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "A hollow glass bar.  Looks like it would fit perfectly as a tube light."
 	icon_state = "glass_tube"
-	matter = list("glass" = 10)
+	matter = list("glass" = 200)
 
 
 /obj/item/metal_shiv
@@ -54,7 +54,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a metal shiv. It can be made into many things."
 	icon_state = "metal_shiv"
-	matter = list(DEFAULT_WALL_MATERIAL = 15)
+	matter = list(DEFAULT_WALL_MATERIAL = 300)
 
 	press()
 		return /obj/item/screwdriver_head
@@ -72,7 +72,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a top of a wrench."
 	icon_state = "wrench_head"
-	matter = list(DEFAULT_WALL_MATERIAL = 40)
+	matter = list(DEFAULT_WALL_MATERIAL = 800)
 
 /obj/item/glass_handle
 	name = "Glass handle"
@@ -80,7 +80,26 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a piece of glass.  It could be used as a handle"
 	icon_state = "glass_handle"
-	matter = list("glass" = 20)
+	matter = list("glass" = 400)
+
+/obj/item/cylinder_large
+	name = "Large Cylinder"
+	icon = 'icons/obj/crafting.dmi'
+	w_class = ITEM_SIZE_LARGE
+	desc = "This is a large cylinder.  It's about the size of a canister"
+	icon_state = "cylinder_large"
+	matter = list(DEFAULT_WALL_MATERIAL = 2000)
+
+	mill(var/mob/user)
+		return /obj/item/cylinder_large_hollow
+
+/obj/item/cylinder_large_hollow
+	name = "Hollowed-out Large Cylinder"
+	icon = 'icons/obj/crafting.dmi'
+	w_class = ITEM_SIZE_LARGE
+	desc = "This is a large cylinder.  Been milled out."
+	icon_state = "cylinder_large_milled"
+	matter = list(DEFAULT_WALL_MATERIAL = 1000)
 
 /obj/item/cylinder
 	var/chambers = 0
@@ -89,7 +108,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	desc = "This is a makeshift cylinder.  It has zero holes drilled into it"
 	icon_state = "cylinder_0"
-	matter = list(DEFAULT_WALL_MATERIAL = 25)
+	matter = list(DEFAULT_WALL_MATERIAL = 500)
 
 	mill(var/mob/user)
 		switch(chambers)
@@ -156,5 +175,33 @@
 
 /obj/item/weapon/gun/projectile/revolver/crafted/three_chamber
 	max_shells = 3
+
 /obj/item/weapon/gun/projectile/revolver/crafted/four_chamber
 	max_shells = 4
+
+/obj/item/solid_bullet_casing
+	name = "Solid Bullet Casing"
+	icon = 'icons/obj/crafting.dmi'
+	w_class = ITEM_SIZE_SMALL
+	desc = "This is a  solid bullet casing."
+	icon_state = "solid_ammo_casing"
+	matter = list(DEFAULT_WALL_MATERIAL = 200)
+
+	mill(var/mob/user)
+		return /obj/item/bullet_casing
+
+/obj/item/bullet_casing
+	name = "Bullet Casing"
+	icon = 'icons/obj/crafting.dmi'
+	w_class = ITEM_SIZE_SMALL
+	desc = "This is a bullet casing.  It doesn't have a bullet in it yet."
+	icon_state = "milled_ammo_casing"
+	matter = list(DEFAULT_WALL_MATERIAL = 50)
+
+/obj/item/bullet_38
+	name = "Bullet"
+	icon = 'icons/obj/crafting.dmi'
+	w_class = ITEM_SIZE_SMALL
+	desc = "This is a small ball of metal.  Can probably work as a bullet"
+	icon_state = ".38_bullet"
+	matter = list(DEFAULT_WALL_MATERIAL = 200)

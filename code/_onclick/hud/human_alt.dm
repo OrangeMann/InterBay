@@ -354,6 +354,12 @@
 	mymob.surrender.screen_loc = ui_surrender
 	hud_elements |= mymob.surrender
 
+	mymob.wield_icon = new /obj/screen()
+	mymob.wield_icon.name = "wield"
+	mymob.wield_icon.icon = ui_style
+	mymob.wield_icon.icon_state = "wield"
+	mymob.wield_icon.screen_loc = ui_atk
+	hud_elements |= mymob.wield_icon
 
 	mymob.happiness_icon = new /obj/screen()
 	mymob.happiness_icon.name = "mood"
@@ -364,9 +370,9 @@
 
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
-	mymob.zone_sel.icon = 'icons/mob/puppet.dmi'
+	mymob.zone_sel.icon = 'icons/mob/puppet_new.dmi'//'icons/mob/puppet.dmi'
 	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel_new.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel_newer.dmi', "[mymob.zone_sel.selecting]")
 	hud_elements |= mymob.zone_sel
 
 	/*

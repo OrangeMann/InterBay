@@ -67,8 +67,47 @@
 	path = /obj/item/stack/cable_coil/30
 	category = "General"
 
-/datum/metal_lathe/recipe/flashlight
-	name = "Flashlight"
-	path = /obj/item/device/flashlight
+/datum/metal_lathe/recipe/fork
+	name = "Fork"
+	path = /obj/item/weapon/material/kitchen/utensil/fork
 	category = "General"
 
+/datum/metal_lathe/recipe/spoon
+	name = "Spoon"
+	path = /obj/item/weapon/material/kitchen/utensil/spoon
+	category = "General"
+
+/datum/metal_lathe/recipe/knife
+	name = "Knife"
+	path = /obj/item/weapon/material/kitchen/utensil/knife
+	category = "General"
+
+/datum/metal_lathe/recipe/ring
+	name = "Ring"
+	path = /obj/item/clothing/ring/material
+	category = "General"
+
+/datum/metal_lathe/recipe/knife_handle
+	name = "Knife Handle"
+	path = /obj/item/weapon/material/butterflyhandle
+	category = "General"
+
+/datum/metal_lathe/recipe/knife_blade
+	name = "Knife Blade"
+	path = /obj/item/weapon/material/butterflyblade
+	category = "General"
+
+/datum/metal_lathe/recipe/large_cylinder
+	name = "Large Cylinder"
+	path = /obj/item/cylinder_large
+	category = "General"
+
+/datum/metal_lathe/recipe/ammo_casing
+	name = "Ammo Casing"
+	path = /obj/item/solid_bullet_casing
+	category = "General"
+
+/datum/metal_lathe/recipe/bullet_38
+	name = "Bullet"
+	path = /obj/item/bullet_38
+	category = "General"
